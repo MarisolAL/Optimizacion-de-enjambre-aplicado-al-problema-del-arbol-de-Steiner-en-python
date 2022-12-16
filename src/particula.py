@@ -93,7 +93,6 @@ class Particula:
             nueva_velocidad.append(nuevo_valor)
         self.velocidad = nueva_velocidad
 
-
     def actualiza_fitness(self):
         """
         Función que actualiza el fitness de una partícula, ajusta si el nuevo valor es el mejor fitness y verifica si
