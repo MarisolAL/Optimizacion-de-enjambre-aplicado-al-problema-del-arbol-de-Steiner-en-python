@@ -62,13 +62,13 @@ class Particula:
                 nueva_posicion[i] = limite_inferior[i]
         self.posicion = nueva_posicion
 
-    def actualiza_velocidad(self, mejor_global):
+    def actualiza_velocidad(self, posicion_mejor_global):
         """
         Función que actualiza el vector de velocidades de una partícula
         Parameters
         ----------
-        mejor_global: list
-            Vector con la posición de la partícula con mejor fitness
+        posicion_mejor_global: list
+            Vector con la posicion de la mejor partícula en el enjambre
         """
         w = 0.5  # Constante de inercia
         c_1 = 1.25  # Constante cognitiva
@@ -82,7 +82,7 @@ class Particula:
 
         for i in range(len(self.posicion)):
             velocidad_cognitiva.append(self.mejor_fitness[1][i] - self.posicion[i])
-            velocidad_social.append(mejor_global[i] - self.posicion[i])
+            velocidad_social.append(posicion_mejor_global[i] - self.posicion[i])
 
         nueva_velocidad = []
         for i in range(len(self.posicion)):
