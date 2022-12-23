@@ -17,6 +17,7 @@ class Enjambre:
 
     def __init__(self, tam_poblacion, posicion_inicial, funcion_fitness):
         """
+        Constructor de la clase Enjambre
         Parameters
         ----------
         tam_poblacion: Int
