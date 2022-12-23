@@ -1,6 +1,6 @@
 import networkx as nx
 import src.enjambre as enjambre
-from src.util import distancia_entre_dos_puntos
+from src.util import distancia_entre_dos_puntos, calcula_peso_total_grafica
 
 
 class Steiner:
@@ -11,13 +11,20 @@ class Steiner:
     ----------
     puntos: list
         Puntos pertenecientes al conjunto inicial del problema
-    arbol: list
+    arbol: nx. Graph
         Lista de aristas pertenecientes al árbol euclideano de peso mínimo
     peso: float
         Número con el valor del peso del árbol
     """
 
     def __init__(self, puntos):
+        """
+        Constructor de la clase steiner
+        Parameters
+        ----------
+        puntos: list
+            Puntos que pertenecientes al conjunto inicial del problema
+        """
         self.puntos = puntos
         self.arbol = None
         self.peso = None
@@ -42,10 +49,26 @@ class Steiner:
 
     def calcula_peso_total_arbol(self):
         """
-        Función que calcula el peso total del árbol en el conjunto de puntos.
+        Función que calcula el peso total del árbol en el conjunto de puntos y la asigna
+        al atributo `peso`.
         """
-        peso_total = 0
-        for arista in self.arbol.edges.data('weight', default=1000):
-            print(arista)
-            peso_total += arista[2]
-        self.peso = peso_total
+        self.peso = calcula_peso_total_grafica(self.arbol)
+
+    def calcula_arbol_con_punto(self, punto):
+        """
+        Función que dado un punto calcula el árbol generador de peso mínimo euclideano del conjunto
+        inicial de puntos y el punto recibido
+        Parameters
+        ----------
+        punto: tuple
+            Punto agregado al conjunto inicial de puntos para calcular el árbol.
+        Returns
+        -------
+        nx.Graph
+            El arbol generador de peso mínimo incluyendo al punto pasado como parámetro
+        """
+        nuevos_puntos = self.puntos + [punto]
+        nuevo_steiner = Steiner(nuevos_puntos)
+        nuevo_steiner.calcula_arbol_euclidiano_minimo()
+        return nuevo_steiner.arbol
+
