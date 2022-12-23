@@ -72,3 +72,36 @@ class Steiner:
         nuevo_steiner.calcula_arbol_euclidiano_minimo()
         return nuevo_steiner.arbol
 
+    def obten_limite_superior(self):  # TODO: Hacer pruebas
+        """
+        Función que calcula las coordenadas máximas del conjunto de puntos
+        Returns
+        -------
+        list
+            Lista con el valor de la abscisa máxima y la ordenada máxima
+        """
+        abscisa_max = self.puntos[0][0]
+        ordenada_max = self.puntos[0][1]
+        for punto in self.puntos:
+            if punto[0] > abscisa_max:
+                abscisa_max = punto[0]
+            if punto[1] > ordenada_max:
+                ordenada_max = punto[1]
+        return [abscisa_max, ordenada_max]
+
+    def obten_limite_inferior(self):
+        """
+        Función que calcula las coordenadas mínimas del conjunto de puntos
+        Returns
+        -------
+        list
+            Lista con el valor de la abscisa mínima y la ordenada mínima
+        """
+        abscisa_min = self.puntos[0][0]
+        ordenada_min = self.puntos[0][1]
+        for punto in self.puntos:
+            if punto[0] < abscisa_min:
+                abscisa_min = punto[0]
+            if punto[1] < ordenada_min:
+                ordenada_min = punto[1]
+        return [abscisa_min, ordenada_min]
