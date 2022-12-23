@@ -73,4 +73,3 @@ class Enjambre:
                 iteracion_sin_mejora += 1
             iteracion += 1
         return self.mejor_global
-

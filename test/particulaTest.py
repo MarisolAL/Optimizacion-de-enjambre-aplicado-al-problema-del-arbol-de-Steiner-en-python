@@ -1,5 +1,6 @@
-import unittest
 import src.particula as particula
+import unittest
+
 
 
 class ParticulaTest(unittest.TestCase):
