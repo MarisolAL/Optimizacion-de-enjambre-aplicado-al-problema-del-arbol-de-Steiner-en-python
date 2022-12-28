@@ -51,8 +51,8 @@ class Enjambre:
             Iteraciones máximas que realizará el algoritmo
         Returns
         -------
-        tuple
-            La posición y evaluación de la partícula con mejor fitness
+        particula.Particula
+            Partícula con mejor fitness
         """
         iteracion = 0
         iteracion_sin_mejora = 0
@@ -61,16 +61,16 @@ class Enjambre:
             for k in range(len(self.poblacion)):
                 particula_k = self.poblacion[k]
                 particula_k.actualiza_fitness()
-                if particula_k.fitness < self.mejor_global[0]:
-                    self.mejor_global = (particula_k.fitness, particula_k.posicion)
+                if particula_k.fitness < self.mejor_global.fitness:
+                    self.mejor_global = particula_k
                     iteracion_sin_mejora = 0
 
             for k in range(len(self.poblacion)):
                 particula_k = self.poblacion[k]
                 particula_k.debo_reiniciar()
-                particula_k.actualiza_velocidad(self.mejor_global[1])
+                particula_k.actualiza_velocidad(self.mejor_global.posicion)
                 particula_k.actualiza_posicion(limite_superior, limite_inferior)
-            if anterior_mejor_global[1] == self.mejor_global[1]:
+            if anterior_mejor_global.posicion == self.mejor_global.posicion:
                 iteracion_sin_mejora += 1
             iteracion += 1
         return self.mejor_global
