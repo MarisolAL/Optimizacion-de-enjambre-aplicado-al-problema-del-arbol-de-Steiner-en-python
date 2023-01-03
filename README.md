@@ -3,4 +3,6 @@
 El código para el modelo de la aproximación será implementada en Python 3 con la ayuda de las siguientes bibliotecas:
 
 * [NetworkX](https://networkx.org/documentation/stable/index.html)
-
+* [Random](https://docs.python.org/3/library/random.html)
+* [Numpy](https://numpy.org)
+* [unittest](https://docs.python.org/3/library/unittest.html)

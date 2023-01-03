@@ -36,11 +36,11 @@ class Steiner:
         """
         grafica = nx.Graph()
         for punto_i in self.puntos:
-            grafica.add_node(punto_i)
+            grafica.add_node(tuple(punto_i))
         for punto_i in self.puntos:
             for punto_j in self.puntos:
-                if (not punto_i == punto_j) and (not grafica.has_edge(punto_i, punto_j)):
-                    grafica.add_edge(punto_i, punto_j, weight=distancia_entre_dos_puntos(punto_i, punto_j))
+                if (not punto_i == punto_j) and (not grafica.has_edge(tuple(punto_i), tuple(punto_j))):
+                    grafica.add_edge(tuple(punto_i), tuple(punto_j), weight=distancia_entre_dos_puntos(punto_i, punto_j))
         arbol = nx.minimum_spanning_tree(grafica)
         for arista_i in arbol.edges:
             peso = distancia_entre_dos_puntos(arista_i[0], arista_i[1])
@@ -72,7 +72,7 @@ class Steiner:
         nuevo_steiner.calcula_arbol_euclidiano_minimo()
         return nuevo_steiner.arbol
 
-    def obten_limite_superior(self):  # TODO: Hacer pruebas
+    def obten_limite_superior(self):
         """
         Función que calcula las coordenadas máximas del conjunto de puntos
         Returns
@@ -157,6 +157,5 @@ class Steiner:
                 self.calcula_arbol_euclidiano_minimo()
                 self.calcula_peso_total_arbol()
             enjambre_actual += 1
-        print("Peso final ", self.peso)
+        print("Peso final ", self.peso, " con los puntos ", self.puntos)
         return [self.puntos, self.peso]
-

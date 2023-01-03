@@ -98,7 +98,7 @@ class Particula:
         Función que actualiza el fitness de una partícula, ajusta si el nuevo valor es el mejor fitness y verifica si
         la particula empeoró su fitness
         """
-        fitness_posicion_actual = self.fitness(self.posicion)
+        fitness_posicion_actual = self.funcion_fitness(self.posicion)
         self.fitness = fitness_posicion_actual
         if fitness_posicion_actual > self.mejor_fitness[0]:
             self.empeora += 1
