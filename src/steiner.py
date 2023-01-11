@@ -143,6 +143,7 @@ class Steiner:
         print("Peso original ", str(self.peso))
         lim_max = self.obten_limite_superior()
         lim_min = self.obten_limite_inferior()
+        nuevos_puntos_steiner = []
         enjambre_actual = 0
         while enjambre_actual < cantidad_enjambres:
             abscisa_inicial = random.uniform(lim_min[0], lim_max[0])
@@ -153,9 +154,11 @@ class Steiner:
             nuevo_punto_steiner = mejor_particula_steiner.posicion
             nuevo_fitness_steiner = mejor_particula_steiner.fitness
             if nuevo_fitness_steiner < self.peso:
+                nuevos_puntos_steiner.append(nuevo_punto_steiner)
                 self.puntos.append(nuevo_punto_steiner)
                 self.calcula_arbol_euclidiano_minimo()
                 self.calcula_peso_total_arbol()
             enjambre_actual += 1
         print("Peso final ", self.peso, " con los puntos ", self.puntos)
-        return [self.puntos, self.peso]
+        return [self.puntos, self.peso, nuevos_puntos_steiner]
+
