@@ -1,6 +1,7 @@
+import json
 import matplotlib.pyplot as plt
 import networkx as nx
-import src.steiner as steiner 
+import src.steiner as steiner
 
 
 def ejecuta_algoritmo_con_grafica(iteracion_max, cantidad_enjambres, tam_poblacion, puntos_iniciales):
@@ -35,7 +36,7 @@ def ejecuta_algoritmo_con_grafica(iteracion_max, cantidad_enjambres, tam_poblaci
     vertices_steiner_dict = {v: [v[0], v[1]] for v in arbol_steiner.nodes}
     etiquetas_vertices = {v: [float(f'{v[0]:.2f}'), float(f'{v[1]:.2f}')]
                           for v in arbol_steiner.nodes}
-    print(vertices_steiner_dict)
+
     plt.subplot(122)
     plt.title("Arbol con puntos Steiner", fontsize=tam_fuente)
     nx.draw_networkx_nodes(arbol_steiner, vertices_steiner_dict, node_size=350, node_color=node_color)
@@ -49,7 +50,22 @@ def ejecuta_algoritmo_con_grafica(iteracion_max, cantidad_enjambres, tam_poblaci
                                  font_size=tam_fuente, font_family=fuente)
     plt.show()
 
+def grafica_dos_arboles(arbol_1, arbol_2):
+    fuente = 'caladea'
+    tam_fuente = 10
+    plt.rcParams["font.family"] = "caladea"
+    edge_color = "#511F29"
+    node_color = "#DA536E"
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    ejecuta_algoritmo_con_grafica(30, 10, 15, [(-4, 0), (0, 6), (4, 0)])
+    # nombre_archivo = input()
+    archivo = open('../Ejemplos/ejemplo-steiner-brazil.json')
+    datos = json.load(archivo)
+    # ejecuta_algoritmo_con_grafica(30, 10, 15, [(-4, 0), (0, 6), (4, 0)])
+    iteracion_max = datos['iteración_max']
+    cantidad_enjambres = datos['cantidad_enjambres']
+    tam_poblacion = datos ['tam_poblacion']
+    ejecuciones = datos["ejecuciones"]
+    ejecuta_algoritmo_con_grafica(iteracion_max, cantidad_enjambres, tam_poblacion, datos['puntos_originales'])
