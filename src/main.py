@@ -1,3 +1,4 @@
+import copy
 import json
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -66,6 +67,25 @@ if __name__ == '__main__':
     # ejecuta_algoritmo_con_grafica(30, 10, 15, [(-4, 0), (0, 6), (4, 0)])
     iteracion_max = datos['iteración_max']
     cantidad_enjambres = datos['cantidad_enjambres']
-    tam_poblacion = datos ['tam_poblacion']
+    tam_poblacion = datos['tam_poblacion']
     ejecuciones = datos["ejecuciones"]
-    ejecuta_algoritmo_con_grafica(iteracion_max, cantidad_enjambres, tam_poblacion, datos['puntos_originales'])
+    puntos_problema = datos['puntos_originales']
+    s_original = steiner.Steiner(copy.copy(puntos_problema))
+    s_original.calcula_arbol_euclidiano_minimo()
+    s_original.calcula_peso_total_arbol()
+    peso_minimo = s_original.peso
+    puntos_steiner = copy.copy(s_original.puntos)
+    st = steiner.Steiner(puntos_problema.copy())
+    for i in range(ejecuciones):
+        print("Ejecucion ", i)
+        st.set_steiner(puntos_problema.copy())
+        st.calcula_arbol_euclidiano_minimo()
+        st.calcula_peso_total_arbol()
+        st.optimizacion_particulas_steiner(iteracion_max, cantidad_enjambres, tam_poblacion)
+        if st.peso < peso_minimo:
+            peso_minimo = copy.copy(st.peso)
+            puntos_steiner = st.puntos.copy()
+        st.borra_steiner()
+    print("Valor minimo encontrado", puntos_steiner, peso_minimo)
+    #puntos_steiner.grafica_steiner()
+    #s.ejecuta_algoritmo_con_grafica(iteracion_max, cantidad_enjambres, tam_poblacion, datos['puntos_originales'])

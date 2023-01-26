@@ -1,3 +1,4 @@
+import copy
 import src.particula as particula
 
 
@@ -32,9 +33,9 @@ class Enjambre:
         for i in range(tam_poblacion):
             particula_i = particula.Particula(posicion_inicial, funcion_fitness)
             if i == 0:
-                self.mejor_global = particula_i
+                self.mejor_global = copy.copy(particula_i)
             if self.mejor_global.fitness > particula_i.fitness:
-                self.mejor_global = particula_i
+                self.mejor_global = copy.copy(particula_i)
             self.poblacion.append(particula_i)
         self.fitness = funcion_fitness
 
@@ -57,17 +58,18 @@ class Enjambre:
         iteracion = 0
         iteracion_sin_mejora = 0
         while iteracion < cantidad_iteraciones and iteracion_sin_mejora <= 35:
-            anterior_mejor_global = self.mejor_global
+            anterior_mejor_global = copy.copy(self.mejor_global)
             for k in range(len(self.poblacion)):
                 particula_k = self.poblacion[k]
                 particula_k.actualiza_fitness()
                 if particula_k.fitness < self.mejor_global.fitness:
-                    self.mejor_global = particula_k
+                    self.mejor_global = copy.copy(particula_k)
                     iteracion_sin_mejora = 0
 
             for k in range(len(self.poblacion)):
                 particula_k = self.poblacion[k]
                 particula_k.debo_reiniciar()
+                particula_k.actualiza_fitness()
                 particula_k.actualiza_velocidad(self.mejor_global.posicion)
                 particula_k.actualiza_posicion(limite_superior, limite_inferior)
             if anterior_mejor_global.posicion == self.mejor_global.posicion:

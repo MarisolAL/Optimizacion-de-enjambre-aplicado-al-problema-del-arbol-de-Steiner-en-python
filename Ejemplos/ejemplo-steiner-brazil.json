@@ -13,8 +13,8 @@
                         [79.5786131582715, 31.4018536963378],
                         [89.9494831263964, 13.5852309305847],
                         [86.0936468561961, 7.0701972326601]],
-  "iteración_max": 30,
-  "cantidad_enjambres": 20,
-  "tam_poblacion": 30,
+  "iteración_max": 50,
+  "cantidad_enjambres": 10,
+  "tam_poblacion": 50,
   "ejecuciones": 25
 }

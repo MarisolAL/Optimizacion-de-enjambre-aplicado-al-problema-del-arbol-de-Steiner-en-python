@@ -1,7 +1,10 @@
+from datetime import datetime
+import matplotlib.pyplot as plt
 import networkx as nx
 import src.enjambre as enjambre
 from src.util import distancia_entre_dos_puntos, calcula_peso_total_grafica
 import random
+
 
 class Steiner:
     """
@@ -29,6 +32,14 @@ class Steiner:
         self.arbol = None
         self.peso = None
 
+    def borra_steiner(self):
+        """
+        Función que elimina los datos del objeto Steiner
+        """
+        self.puntos = []
+        self.peso = 0
+        self.arbol = None
+
     def calcula_arbol_euclidiano_minimo(self):
         """
         Función que calcula dado el conjunto de puntos inicial el arbol generador de peso
@@ -40,7 +51,8 @@ class Steiner:
         for punto_i in self.puntos:
             for punto_j in self.puntos:
                 if (not punto_i == punto_j) and (not grafica.has_edge(tuple(punto_i), tuple(punto_j))):
-                    grafica.add_edge(tuple(punto_i), tuple(punto_j), weight=distancia_entre_dos_puntos(punto_i, punto_j))
+                    grafica.add_edge(tuple(punto_i), tuple(punto_j),
+                                     weight=distancia_entre_dos_puntos(punto_i, punto_j))
         arbol = nx.minimum_spanning_tree(grafica)
         for arista_i in arbol.edges:
             peso = distancia_entre_dos_puntos(arista_i[0], arista_i[1])
@@ -150,7 +162,8 @@ class Steiner:
             ordenada_inicial = random.uniform(lim_min[1], lim_max[1])
             posicion_inicial = [abscisa_inicial, ordenada_inicial]
             enjambre_generado = enjambre.Enjambre(tam_poblacion, posicion_inicial, self.fitness_problema_steiner)
-            mejor_particula_steiner = enjambre_generado.optimizacion_enjambre_particulas(lim_max, lim_min, iteracion_max)
+            mejor_particula_steiner = enjambre_generado.optimizacion_enjambre_particulas(lim_max, lim_min,
+                                                                                         iteracion_max)
             nuevo_punto_steiner = mejor_particula_steiner.posicion
             nuevo_fitness_steiner = mejor_particula_steiner.fitness
             if nuevo_fitness_steiner < self.peso:
@@ -162,3 +175,31 @@ class Steiner:
         print("Peso final ", self.peso, " con los puntos ", self.puntos)
         return [self.puntos, self.peso, nuevos_puntos_steiner]
 
+    def grafica_steiner(self):
+        """
+        Funcion que guarda la gráfica en formato PNG del arbol
+        """
+        nombre_archivo = "peso_" + str(self.peso) + "_fecha_" + str(datetime.now()) + ".png"
+        fuente = 'caladea'
+        tam_fuente = 8
+        plt.rcParams["font.family"] = "caladea"
+        edge_color = "#511F29"
+        node_color = "#DA536E"
+
+        arbol = self.arbol
+        aristas_originales = [(u, v) for (u, v, d) in arbol.edges(data=True)]
+        vertices_dict = {v: [v[0], v[1]] for v in arbol.nodes}
+        etiquetas_vertices = {v: [float(f'{v[0]:.2f}'), float(f'{v[1]:.2f}')]
+                              for v in arbol.nodes}
+        titulo_imagen = "Arbol con peso: " + str(self.peso)
+        plt.title(titulo_imagen, fontsize=tam_fuente)
+        nx.draw_networkx_nodes(arbol, vertices_dict, node_size=350, node_color=node_color)
+        nx.draw_networkx_edges(arbol, vertices_dict, edgelist=aristas_originales, width=2,
+                               edge_color=edge_color)
+        nx.draw_networkx_labels(arbol, vertices_dict, font_size=tam_fuente, font_family=fuente,
+                                labels=etiquetas_vertices)
+        etiquetas_arbol_original = {key: float(f'{value:.2f}') for key, value in
+                                    nx.get_edge_attributes(arbol, "weight").items()}
+        nx.draw_networkx_edge_labels(arbol, vertices_dict, etiquetas_arbol_original,
+                                     font_size=tam_fuente, font_family=fuente)
+        plt.savefig(nombre_archivo, format="PNG")
