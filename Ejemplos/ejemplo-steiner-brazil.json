@@ -14,7 +14,8 @@
                         [89.9494831263964, 13.5852309305847],
                         [86.0936468561961, 7.0701972326601]],
   "iteración_max": 50,
-  "cantidad_enjambres": 10,
-  "tam_poblacion": 50,
-  "ejecuciones": 25
+  "cantidad_enjambres": 15,
+  "tam_poblacion": 150,
+  "ejecuciones": 150,
+  "peso_steiner": 141.85556141735944
 }
