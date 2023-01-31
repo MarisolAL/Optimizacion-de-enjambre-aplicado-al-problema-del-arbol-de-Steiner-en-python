@@ -51,15 +51,35 @@ def ejecuta_algoritmo_con_grafica(iteracion_max, cantidad_enjambres, tam_poblaci
                                  font_size=tam_fuente, font_family=fuente)
     plt.show()
 
-def grafica_dos_arboles(arbol_1, arbol_2):
+
+def grafica_arbol_con_steiner(puntos_originales, puntos_steiner, title):
     fuente = 'caladea'
     tam_fuente = 10
     plt.rcParams["font.family"] = "caladea"
-    edge_color = "#511F29"
-    node_color = "#DA536E"
+    aristas_color = "#49817A"
+    ptos_originales_color = "#DA536E"
+    steiner_color = "#00C9B8"
+    steiner_original = steiner.Steiner(puntos_originales.copy())
+    steiner_original.calcula_arbol_euclidiano_minimo()
+    steiner_original.calcula_peso_total_arbol()
+    steiner_steiner = steiner.Steiner(puntos_steiner.copy())
+    steiner_steiner.calcula_arbol_euclidiano_minimo()
+    steiner_act = steiner.Steiner(puntos_originales.copy() + puntos_steiner.copy())
+    steiner_act.calcula_arbol_euclidiano_minimo()
+    arbol_act = steiner_act.arbol
+    aristas_act = [(u, v) for (u, v, d) in arbol_act.edges(data=True)]
+    vertices_originales = {v: [v[0], v[1]] for v in steiner_original.arbol.nodes}
+    vertices_steiner = {v: [v[0], v[1]] for v in steiner_steiner.arbol.nodes}
+    vertices_act = {v: [v[0], v[1]] for v in arbol_act.nodes}
+    print("peso", steiner_original.peso)
+    plt.title(title, fontsize=tam_fuente)
+    nx.draw_networkx_nodes(steiner_original.arbol, vertices_originales, node_size=30, node_color=ptos_originales_color)
+    nx.draw_networkx_nodes(steiner_steiner.arbol, vertices_steiner, node_size=30, node_color=steiner_color)
+    nx.draw_networkx_edges(arbol_act, vertices_act, edgelist=aristas_act, width=2, edge_color=aristas_color)
+
+    plt.show()
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # nombre_archivo = input()
     archivo = open('../Ejemplos/ejemplo-steiner-brazil.json')

@@ -17,5 +17,6 @@
   "cantidad_enjambres": 15,
   "tam_poblacion": 150,
   "ejecuciones": 150,
-  "peso_steiner": 141.85556141735944
+  "peso_steiner": 141.85556141735944,
+  "peso_original": 145.31619976710812
 }
