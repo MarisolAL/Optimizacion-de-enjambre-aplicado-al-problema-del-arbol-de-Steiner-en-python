@@ -1,0 +1,21 @@
+Ejemplo Brazil:
+Peso original: 145.31619976710812
+Peso arbol steiner en bibliografía: 141.85556141735944
+Peso encontrado: 141.9124195765307
+
+peso encontrado / peso bibliografía = 1.0004008172721828
+
+Ejemplo Decroos:
+Peso original: 210572.85375362588
+Peso arbol steiner en bibliografía: 206973.8455339465
+Peso encontrado: 205099.38677192564
+
+peso encontrado / peso bibliografía = 0.9909434993721783
+
+Ejemplo Sin fuente
+Peso original: 7.0
+Peso arbol steiner en bibliografía: 6.62062814049094
+Peso encontrado: 6.621679219281745
+
+peso encontrado / peso bibliografía = 1.0001587581674278
+
