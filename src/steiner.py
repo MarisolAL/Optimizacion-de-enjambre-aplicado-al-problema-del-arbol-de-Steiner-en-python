@@ -1,4 +1,5 @@
 from datetime import datetime
+import math
 import matplotlib.pyplot as plt
 import networkx as nx
 import src.enjambre as enjambre
@@ -135,7 +136,7 @@ class Steiner:
         peso_nuevo_arbol = calcula_peso_total_grafica(nuevo_arbol)
         return peso_nuevo_arbol
 
-    def optimizacion_particulas_steiner(self, iteracion_max, cantidad_enjambres, tam_poblacion):
+    def optimizacion_particulas_steiner(self, iteracion_max, cantidad_enjambres, tam_poblacion, no_max_puntos = math.inf):
         """
         Función que ejecuta el algoritmo de optimización por enjambre de partículas sobre el problema del
         arbol de Steiner
@@ -147,6 +148,8 @@ class Steiner:
             Cantidad de enjambres que se crearán para ejecutarlos de uno en uno
         tam_poblacion: int
             Tamaño de población para los enjambres, todos los enjambres tendrán el mismo tamaño
+        no_max_puntos: int
+            Número máximo de puntos Steiner a encontrar
         Returns
         -------
         list
@@ -157,7 +160,7 @@ class Steiner:
         lim_min = self.obten_limite_inferior()
         nuevos_puntos_steiner = []
         enjambre_actual = 0
-        while enjambre_actual < cantidad_enjambres:
+        while enjambre_actual < cantidad_enjambres and len(nuevos_puntos_steiner) < no_max_puntos:
             abscisa_inicial = random.uniform(lim_min[0], lim_max[0])
             ordenada_inicial = random.uniform(lim_min[1], lim_max[1])
             posicion_inicial = [abscisa_inicial, ordenada_inicial]
