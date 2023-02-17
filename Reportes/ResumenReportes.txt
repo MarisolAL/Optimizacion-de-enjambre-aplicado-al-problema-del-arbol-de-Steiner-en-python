@@ -19,3 +19,9 @@ Peso encontrado: 6.621679219281745
 
 peso encontrado / peso bibliografía = 1.0001587581674278
 
+Ejemplo Decroos con misma cantidad de puntos:
+Peso original: 210572.85375362588
+Peso arbol steiner en bibliografía: 206973.8455339465
+Peso encontrado: 206357.62940774264
+
+peso encontrado / peso bibliografía = 0.9970227343236815
