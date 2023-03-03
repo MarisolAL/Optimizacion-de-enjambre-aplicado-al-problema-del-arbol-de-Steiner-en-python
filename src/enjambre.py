@@ -61,7 +61,6 @@ class Enjambre:
             anterior_mejor_global = copy.copy(self.mejor_global)
             for k in range(len(self.poblacion)):
                 particula_k = self.poblacion[k]
-                particula_k.actualiza_fitness()
                 if particula_k.fitness < self.mejor_global.fitness:
                     self.mejor_global = copy.copy(particula_k)
                     iteracion_sin_mejora = 0
