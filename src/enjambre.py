@@ -11,7 +11,7 @@ class Enjambre:
     poblacion: list
         Lista de partículas dentro del enjambre
     mejor_global: tuple
-        Tupla con la evaluación y la posición de la mejor partícula en el enjambre durante todas las iteraciones
+        Partícula con el mejor fitness en el enjambre durante todas las iteraciones
     fitness: function
         Función que evalúa el fitness de una partícula
     """
@@ -39,15 +39,15 @@ class Enjambre:
             self.poblacion.append(particula_i)
         self.fitness = funcion_fitness
 
-    def optimizacion_enjambre_particulas(self, limite_superior, limite_inferior, cantidad_iteraciones):
+    def optimizacion_enjambre_particulas(self, limite_inferior, limite_superior, cantidad_iteraciones):
         """
         Función que ejecuta el algoritmo de optimización por enjambre de particulas
         Parameters
         ----------
-        limite_superior: list
-            Limite superior del espacio de búsqueda
         limite_inferior: list
             Límite inferior del espacio de búsqueda
+        limite_superior: list
+            Limite superior del espacio de búsqueda
         cantidad_iteraciones: Int
             Iteraciones máximas que realizará el algoritmo
         Returns

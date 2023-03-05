@@ -136,7 +136,7 @@ class Steiner:
         peso_nuevo_arbol = calcula_peso_total_grafica(nuevo_arbol)
         return peso_nuevo_arbol
 
-    def optimizacion_particulas_steiner(self, iteracion_max, cantidad_enjambres, tam_poblacion, no_max_puntos = math.inf):
+    def optimizacion_particulas_steiner(self, iteracion_max, cantidad_enjambres, tam_poblacion, no_max_puntos=math.inf):
         """
         Función que ejecuta el algoritmo de optimización por enjambre de partículas sobre el problema del
         arbol de Steiner
@@ -156,8 +156,8 @@ class Steiner:
             Lista con los puntos originales y los puntos steiner y el peso final obtenido agregando los puntos
         """
         print("Peso original ", str(self.peso))
-        lim_max = self.obten_limite_superior()
         lim_min = self.obten_limite_inferior()
+        lim_max = self.obten_limite_superior()
         nuevos_puntos_steiner = []
         enjambre_actual = 0
         while enjambre_actual < cantidad_enjambres and len(nuevos_puntos_steiner) < no_max_puntos:
@@ -165,7 +165,8 @@ class Steiner:
             ordenada_inicial = random.uniform(lim_min[1], lim_max[1])
             posicion_inicial = [abscisa_inicial, ordenada_inicial]
             enjambre_generado = enjambre.Enjambre(tam_poblacion, posicion_inicial, self.fitness_problema_steiner)
-            mejor_particula_steiner = enjambre_generado.optimizacion_enjambre_particulas(lim_max, lim_min,
+            mejor_particula_steiner = enjambre_generado.optimizacion_enjambre_particulas(lim_min,
+                                                                                         lim_max,
                                                                                          iteracion_max)
             nuevo_punto_steiner = mejor_particula_steiner.posicion
             nuevo_fitness_steiner = mejor_particula_steiner.fitness
