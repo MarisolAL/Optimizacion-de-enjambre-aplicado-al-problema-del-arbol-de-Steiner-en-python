@@ -67,10 +67,9 @@ class Enjambre:
 
             for k in range(len(self.poblacion)):
                 particula_k = self.poblacion[k]
-                particula_k.debo_reiniciar()
-                particula_k.actualiza_fitness()
-                particula_k.actualiza_velocidad(self.mejor_global.posicion)
-                particula_k.actualiza_posicion(limite_superior, limite_inferior)
+                particula_k.actualiza_estado(limite_inferior,
+                                             limite_superior,
+                                             self.mejor_global.posicion)
             if anterior_mejor_global.posicion == self.mejor_global.posicion:
                 iteracion_sin_mejora += 1
             iteracion += 1

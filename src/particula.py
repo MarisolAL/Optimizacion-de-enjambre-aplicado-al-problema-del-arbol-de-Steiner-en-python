@@ -81,8 +81,10 @@ class Particula:
         velocidad_social = []
 
         for i in range(len(self.posicion)):
-            velocidad_cognitiva.append(self.mejor_fitness[1][i] - self.posicion[i])
-            velocidad_social.append(posicion_mejor_global[i] - self.posicion[i])
+            velocidad_cognitiva.append(self.mejor_fitness[1][i] -
+                                       self.posicion[i])
+            velocidad_social.append(posicion_mejor_global[i] -
+                                    self.posicion[i])
 
         nueva_velocidad = []
         for i in range(len(self.posicion)):
@@ -118,3 +120,21 @@ class Particula:
             self.empeora = 0
             self.fitness = nueva_particula.fitness
             self.mejor_fitness = nueva_particula.mejor_fitness
+
+    def actualiza_estado(self, limite_inferior, limite_superior, posicion_mejor_global):
+        """
+        Función que realiza el ciclo necesario para actualizar los parámetros de una partícula en la
+        siguiente iteración
+        Parameters
+        ----------
+        limite_inferior: list
+            Límite inferior del espacio de búsqueda
+        limite_superior: list
+            Limite superior del espacio de búsqueda
+        posicion_mejor_global: list
+            Vector con la posicion de la mejor partícula en el enjambre
+        """
+        self.debo_reiniciar()
+        self.actualiza_fitness()
+        self.actualiza_velocidad(posicion_mejor_global)
+        self.actualiza_posicion(limite_superior, limite_inferior)
