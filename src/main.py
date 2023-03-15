@@ -53,7 +53,6 @@ def ejecuta_algoritmo_con_grafica(iteracion_max, cantidad_enjambres, tam_poblaci
 
 
 def grafica_arbol_con_steiner(puntos_originales, puntos_steiner, title):
-    fuente = 'caladea'
     tam_fuente = 10
     plt.rcParams["font.family"] = "caladea"
     aristas_color = "#49817A"
@@ -95,17 +94,26 @@ def ejecuta_PSO(nombre_archivo):
     puntos_steiner = copy.copy(s_original.puntos)
     st = steiner.Steiner(puntos_problema.copy())
     for i in range(ejecuciones):
-        print("Ejecucion ", i)
         st.set_steiner(puntos_problema.copy())
         st.calcula_arbol_euclidiano_minimo()
         st.calcula_peso_total_arbol()
-        st.optimizacion_particulas_steiner(iteracion_max, cantidad_enjambres, tam_poblacion, len(puntos_encontrados_json))
+        st.optimizacion_particulas_steiner(iteracion_max,
+                                           cantidad_enjambres,
+                                           tam_poblacion,
+                                           len(puntos_encontrados_json))
         if st.peso < peso_minimo:
             peso_minimo = copy.copy(st.peso)
             puntos_steiner = st.puntos.copy()
             print("MEJORA VALOR MINIMO ", puntos_steiner, peso_minimo)
         st.borra_steiner()
-    print("Valor minimo encontrado", puntos_steiner, peso_minimo)
+    nombre_sin_extension = nombre_archivo[0:nombre_archivo.rindex('.')]
+    nuevo_archivo = nombre_sin_extension + "_resultados.json"
+    datos = {'peso_original': s_original.peso,
+             'peso_mejorado': peso_minimo,
+             'porcentaje_mejora': 100 - (peso_minimo * 100 / s_original.peso),
+             'puntos_encontrados': puntos_steiner}
+    with open(nuevo_archivo, 'w') as outfile:
+        outfile.write(json.dumps(datos, indent=2))
 
 if __name__ == '__main__':
     # nombre_archivo = input()
@@ -123,24 +131,15 @@ if __name__ == '__main__':
     s_original.calcula_peso_total_arbol()
     peso_minimo = s_original.peso
     puntos_steiner = copy.copy(s_original.puntos)
-    st = steiner.Steiner(puntos_problema.copy())
+    # st = steiner.Steiner(puntos_problema.copy())
 
-    puntos_steiner = [[20307.81814400283, 3804.0630296756885],
-                      [6689.781065688405, 28388.1737403941],
-                      [14356.19197917236, 23304.523019160853],
-                      [19607.516349399873, 9654.848479552484],
-                      [11512.012408775214, 4638.856580786782],
-                      [25855.72984624945, 5098.984395419371],
-                      [5959.183685366019, 9406.157453123113],
-                      [22706.23293559074, 2003.7145263370126],
-                      [9699.937709137128, 30298.343800427094],
-                      [16911.10178628403, 23639.586883273318]]
+    # puntos_steiner = [[20307.81814400283, 3804.0630296756885]]
 
     # resultados_bib = "Arbol steiner en bibliografía"
-    arbol_mio = "Arbol obtenido"
+   # arbol_mio = "Arbol obtenido"
     # arbol_no_s = "Arbol original"
-    grafica_arbol_con_steiner(puntos_problema, puntos_steiner, arbol_mio)    # Para graficar
-
+   # grafica_arbol_con_steiner(puntos_problema, puntos_steiner, arbol_mio)    # Para graficar
+    ejecuta_PSO("../Ejemplos/ejemplo-sinfuente.json")
     #s = steiner.Steiner(puntos_steiner + datos["puntos_encontrados"])
     #s.calcula_arbol_euclidiano_minimo()
     #s.calcula_peso_total_arbol()
